@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Seguimiento OIN</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">OIN</div>
+        <div>
+          <strong>Seguimiento</strong>
+          <span>Panel de trabajo</span>
+        </div>
+      </div>
+      <nav>
+        <button class="nav-btn active" data-view="general">▦ <span>Resumen</span></button>
+        <button class="nav-btn" data-view="usuario">👤 <span>Por usuario</span></button>
+        <button class="nav-btn" data-view="reunion">📝 <span>Reunión</span></button>
+      </nav>
+      <div class="sidebar-note">
+        <small>Fuente</small>
+        <strong>Planner / Consolidado OIN</strong>
+        <span>Versión inicial para GitHub Pages</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">OPERACIÓN · ANALÍTICA</p>
+          <h1>Panel de Seguimiento OIN</h1>
+          <p class="subtitle">Vista ejecutiva de tareas, responsables, avance y alertas.</p>
+        </div>
+        <div class="cutoff">
+          <span>Datos cargados</span>
+          <strong id="totalRegistros">0</strong>
+        </div>
+      </header>
+
+      <section class="filters">
+        <label>Usuario
+          <select id="filterUser">
+            <option value="">Todos</option>
+          </select>
+        </label>
+        <label>Estado
+          <select id="filterState">
+            <option value="">Todos</option>
+          </select>
+        </label>
+        <label>Bucket
+          <select id="filterBucket">
+            <option value="">Todos</option>
+          </select>
+        </label>
+        <label>Prioridad
+          <select id="filterPriority">
+            <option value="">Todas</option>
+          </select>
+        </label>
+        <button id="clearFilters" class="ghost">Limpiar filtros</button>
+      </section>
+
+      <section class="view active" id="view-general">
+        <div class="kpis">
+          <article class="kpi"><span>Total tareas</span><strong id="kpiTotal">0</strong><small>en la vista actual</small></article>
+          <article class="kpi"><span>Completadas</span><strong id="kpiDone">0</strong><small id="donePct">0% del total</small></article>
+          <article class="kpi"><span>En curso</span><strong id="kpiProgress">0</strong><small>con avance pendiente</small></article>
+          <article class="kpi alert"><span>Vencidas</span><strong id="kpiLate">0</strong><small>requieren atención</small></article>
+        </div>
+
+        <div class="grid two">
+          <section class="card">
+            <div class="card-head">
+              <div><p class="eyebrow">CARGA DE TRABAJO</p><h2>Distribución por usuario</h2></div>
+            </div>
+            <div id="userBars" class="bars"></div>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <div><p class="eyebrow">ESTADO</p><h2>Avance operativo</h2></div>
+            </div>
+            <div class="donut-wrap">
+              <div class="donut" id="donut"><div><strong id="donutValue">0%</strong><span>completado</span></div></div>
+              <div id="stateLegend" class="legend"></div>
+            </div>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="card-head">
+            <div><p class="eyebrow">PRIORIDADES</p><h2>Tareas que requieren seguimiento</h2></div>
+            <span class="badge" id="attentionCount">0 hallazgos</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Ticket</th><th>Tarea</th><th>Responsable</th><th>Avance</th><th>Estado</th><th>Vencimiento</th></tr></thead>
+              <tbody id="attentionTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="view-usuario">
+        <div class="user-hero">
+          <div>
+            <p class="eyebrow">SEGUIMIENTO INDIVIDUAL</p>
+            <h2 id="userTitle">Selecciona un usuario</h2>
+            <p id="userSubtitle">Elige una persona en el filtro superior para ver su resumen.</p>
+          </div>
+          <div class="progress-ring" id="userRing"><strong id="userPct">0%</strong><span>avance promedio</span></div>
+        </div>
+        <div class="kpis compact">
+          <article class="kpi"><span>Asignadas</span><strong id="uTotal">0</strong></article>
+          <article class="kpi"><span>Hechas</span><strong id="uDone">0</strong></article>
+          <article class="kpi"><span>Pendientes</span><strong id="uPending">0</strong></article>
+          <article class="kpi alert"><span>Vencidas</span><strong id="uLate">0</strong></article>
+        </div>
+        <section class="card">
+          <div class="card-head">
+            <div><p class="eyebrow">DETALLE</p><h2>Tareas del usuario</h2></div>
+          </div>
+          <div id="userTasks" class="task-list"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-reunion">
+        <div class="meeting-head">
+          <div>
+            <p class="eyebrow">REUNIÓN DE SEGUIMIENTO</p>
+            <h2>Resumen listo para presentar</h2>
+            <p>Esta versión resume automáticamente la información visible. Las observaciones editables las conectamos en la siguiente fase.</p>
+          </div>
+          <button id="printMeeting" class="primary">Imprimir / Guardar PDF</button>
+        </div>
+        <div id="meetingSummary" class="meeting-summary"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
